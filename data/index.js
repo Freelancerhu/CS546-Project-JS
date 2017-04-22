@@ -1,8 +1,8 @@
-const sellers= require("./sellers");
-const customers = require("./customers");
-const products = require("./products");
-module.export = {
-	customers: customers,
-	sellers: sellers,
-	products: products
+const sellersData= require("./sellers");
+const customersData = require("./customers");
+const productsData = require("./products");
+module.exports = {
+	customers: customersData,
+	sellers: sellersData,
+	products: productsData
 }

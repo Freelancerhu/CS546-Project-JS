@@ -23,7 +23,7 @@ let exportMethods = {
         });
     },
 	
-	addSeller(requestBody) =>{
+	addSeller(requestBody){
 	    var question;
         if(requestBody.securityQue == 2) {
             question = "Which is your favourite city?";
@@ -137,7 +137,10 @@ let exportMethods = {
             let updateSeller = {
                 imagePath: requestBody.image
             }
-            return sellersCollection.updateOne({ _id: requestBody.userid }, $set: updateSeller).then(() => {
+			let updateCommand = {
+                $set: updateUser
+            }
+            return sellersCollection.updateOne({ _id: requestBody.userid }, updateCommand).then(() => {
                 return this.getSellerById(requestBody.userid);
             });
         });
@@ -146,4 +149,4 @@ let exportMethods = {
 	
 }
 
-module.exports = exportedMethods;
+module.exports = exportMethods;

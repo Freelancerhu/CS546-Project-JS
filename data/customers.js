@@ -22,8 +22,8 @@ let exportMethods = {
             });
         });
     },
-	
-	addUser(requestBody) =>{
+
+	addUser(requestBody){
 	    var question;
         if(requestBody.securityQue == 2) {
             question = "Which is your favourite city?";
@@ -46,13 +46,36 @@ let exportMethods = {
                 city: requestBody.city,
                 state: requestBody.state,
                 zipCode: requestBody.zipCode,
-                imagePath: requestBody.image,
+                //imagePath: requestBody.image,
                 security: question,
                 answer: requestBody.securityAnswer,
 				purchaseRecord: [],
 				cart: []
             };
 			return custCollection.findOne({ email: requestBody.email }).then((customers) => {
+                if (customers) throw "Email already exists.";
+                else {
+                    return custCollection.insertOne(newCustomers)
+					.then(() => {
+                        return this.getUserById(id);
+                    });
+                }
+            });
+        }).catch((err) => {
+			return Promise.reject(err);
+		});
+    },
+	/*
+	addUser(email, password, name){
+		return customers().then((custCollection) => {
+			let id = uuid();
+			let newCustomers = {
+                _id: id,
+                email: email,
+                password: password,
+				name: name,
+            };
+			return custCollection.findOne({ email: email }).then((customers) => {
                 if (customers) throw "Email already exists.";
                 else {
                     return custCollection.insertOne(newCust)
@@ -65,7 +88,8 @@ let exportMethods = {
 			return Promise.reject(err);
 		});
     },
-	
+	*/
+
 	addPurchaseRecordToUser(userId, proId) {
 		return customers().then((custCollection) => {
 			custCollection.updateOne(
@@ -154,7 +178,10 @@ let exportMethods = {
             let updateCust = {
                 imagePath: requestBody.image
             }
-            return custCollection.updateOne({ _id: requestBody.userid }, $set: updateCust).then(() => {
+			let updateCommand = {
+                $set: updateCust
+            }
+            return custCollection.updateOne({ _id: requestBody.userid },updateCommand).then(() => {
                 return this.getUserByID(requestBody.userid);
             });
         });
@@ -162,4 +189,4 @@ let exportMethods = {
 	
 }
 
-module.exports = exportedMethods;
+module.exports = exportMethods;

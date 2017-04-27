@@ -1,11 +1,14 @@
 const data = require("../data");
 const mongoCollections = require("../config/mongoCollections");
 const products = mongoCollections.products;
-const sellerData = data.sellers;
+// const sellerData = data.sellers;
 const uuid = require('node-uuid');
 
 
 let exportedMethods = {
+    test() {
+        console.log("hello")
+    },
 
     getProductById(id) {
         return products().then((productsCollection) => {
@@ -89,10 +92,10 @@ let exportedMethods = {
                     quantity: requestBody.quantity,
                     tag: requestBody.tag,
                     productImage: requestBody.image,
-                    creator: {
-                        _id: requestBody.SellerId,
-                        name: sellerData.getSellerById(requestBody.SellerId).name,
-                    },
+                    // creator: {
+                    //     _id: requestBody.SellerId,
+                    //     name: sellerData.getSellerById(requestBody.SellerId).name,
+                    // },
                     comments:[],
                 };
         return productsCollection.insertOne(newProduct).then((newProductInformation) => {
@@ -105,39 +108,39 @@ let exportedMethods = {
         });
     },
 
-	addComToPro(proId, upPoster, upComments) {
-		let commentId = uuid();
-		return products().then((proCollection) => {
-			proCollection.updateOne(
-			{_id: proId},
-			{
-				$addToSet: {
-					comments: {
-						_id: commentId,
-						poster: upPoster,
-						comment: upComments
-					}
-				}
-			})
-			}).then(() => {
-					return this.getProductById(proId);
-			}).catch((err) => {
-			return Promise.reject(err);
-		});
-	},
-	
+    addComToPro(proId, upPoster, upComments) {
+        let commentId = uuid();
+        return products().then((proCollection) => {
+            proCollection.updateOne(
+            {_id: proId},
+            {
+                $addToSet: {
+                    comments: {
+                        _id: commentId,
+                        poster: upPoster,
+                        comment: upComments
+                    }
+                }
+            })
+            }).then(() => {
+                    return this.getProductById(proId);
+            }).catch((err) => {
+            return Promise.reject(err);
+        });
+    },
+    
     removeProduct(id) {
         return products().then((productsCollection) => {
                 return productsCollection
-				.removeOne({ _id: id })
-				.then((deletionInfo) => {
+                .removeOne({ _id: id })
+                .then((deletionInfo) => {
                     if (deletionInfo.deletedCount === 0) {
-						throw (`Could not delete product with id of ${id}`)
-				} else {}
-			});
-		}).catch((err)=>{
-				console.log("Error while removing product:", err);
-		});
+                        throw (`Could not delete product with id of ${id}`)
+                } else {}
+            });
+        }).catch((err)=>{
+                console.log("Error while removing product:", err);
+        });
     },
 
     /*

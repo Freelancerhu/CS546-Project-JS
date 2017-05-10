@@ -5,14 +5,23 @@ const productData = data.products;
 
 
 //List all products
-router.get('/allproducts', function(req, res) {
-    productData.getAllProducts().then((product) => {
-        res.json(product);
-    }).catch(() => {
-        res.status(404).json({ error: "product not found" });
+// router.get('/allproducts', function(req, res) {
+//     productData.getAllProducts().then((product) => {
+//         res.json(product);
+//     }).catch(() => {
+//         res.status(404).json({ error: "product not found" });
+//     });
+// });
+router.get('/allproducts', function(req, res, next) {
+        productData.getAllProducts().then((pro) => {
+            var productChunks=[];
+            var chunkSize=3;
+            for(var i=0; i<pro.length; i+=chunkSize){
+                productChunks.push(pro.slice(i, i+chunkSize));
+            }
+            res.render('test/index', { title: 'Cart', products: productChunks});
+        });
     });
-});
-
 
 //List product by id
 router.get('/:id', function(req, res) {

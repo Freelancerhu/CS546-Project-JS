@@ -5,12 +5,14 @@ const customerData = data.customers;
 
 var product1 = {
     title: 'Book_001',
-    price: 100
+    price: 100,
+	URL: 'http://www.rd.com/wp-content/uploads/sites/2/2016/03/01-10-unexpected-ways-clothes-affect-mood-power-tie.jpg'
 }
 
 var product2 = {
     title: 'Book_002',
-    price: 200
+    price: 200,
+	URL: 'http://www.rd.com/wp-content/uploads/sites/2/2016/03/01-10-unexpected-ways-clothes-affect-mood-power-tie.jpg'
 }
 
 

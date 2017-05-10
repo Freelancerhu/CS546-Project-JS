@@ -12,6 +12,10 @@
     <!-- Custom styles for this template -->
     <link href="/css/shop-homepage.css" rel="stylesheet">
     <!-- Temporary navbar container fix -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="path/to/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://fontawesome.io/assets/font-awesome/css/font-awesome.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
     <style>
     .navbar-toggler {
         z-index: 1;
@@ -39,9 +43,16 @@
             <a class="navbar-brand" href="/">BGM--Shopping</a>
             <div class="collapse navbar-collapse" id="navbarExample">
                 <ul class="navbar-nav ml-auto">
+                    <li><a href="/cart/shopping-cart/"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Shopping Cart
+                        <span class="badge"> {{session.cart.totalQty}}</span>
+                    </a></li>
                     {{#if user}}
                     <li class="nav-item active">
                         <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                    
+                    <li class="nav-item">
+                        <a class="nav-link" href="/customers/logout">Logout</a>
                     </li>
                     {{else}}
                     <li class="nav-item">

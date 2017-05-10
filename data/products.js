@@ -91,7 +91,7 @@ let exportedMethods = {
                     price:requestBody.price,
                     quantity: requestBody.quantity,
                     tag: requestBody.tag,
-                    productImage: requestBody.image,
+                    productImage: requestBody.URL,
                     // creator: {
                     //     _id: requestBody.SellerId,
                     //     name: sellerData.getSellerById(requestBody.SellerId).name,

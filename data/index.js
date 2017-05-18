@@ -3,6 +3,5 @@ const customerData = require("./customers");
 const productsData = require("./products");
 module.exports = {
     customers: customerData,
-    // sellers: sellers,
     products: productsData
 }

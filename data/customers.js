@@ -23,8 +23,6 @@ let exportMethods = {
         });
     },
 
-
-
     getUserById(id) {
         return customers().then((custCollection) => {
             return custCollection.findOne({_id: id }).then((customers) => {
@@ -33,15 +31,6 @@ let exportMethods = {
             });
         });
     },
-    
-    //  getUserByEmail(email) {
-    //     return customers().then((custCollection) => {
-    //         return custCollection.findOne({ email: email }).then((customers) => {
-    //             if (!customers) throw "Customers not found";
-    //             return customers;
-    //         });
-    //     });
-    // },
 
     addUser(requestBody){
         var question;
@@ -58,51 +47,51 @@ let exportMethods = {
                 email: requestBody.email,
                 password: bcrypt.hashSync(requestBody.password, 10),
                 // name: requestBody.name,
-                // firstName: requestBody.firstName,
-                // lastName: requestBody.lastName,
-                // gender: requestBody.gender,
-                // phoneNumb: requestBody.phoneNumb,
-                // address: requestBody.address,
-                // city: requestBody.city,
-                // state: requestBody.state,
-                // zipCode: requestBody.zipCode,
-                // //imagePath: requestBody.image,
-                // security: question,
-                // answer: requestBody.securityAnswer,
-                // purchaseRecord: [],
-                // cart: []
+                firstName: requestBody.firstName,
+                lastName: requestBody.lastName,
+                gender: requestBody.gender,
+                phoneNumb: requestBody.phoneNumb,
+                address: requestBody.address,
+                city: requestBody.city,
+                state: requestBody.state,
+                zipCode: requestBody.zipCode
             };
+            console.log("aaa");
+            console.log(newCustomers);
+            console.log("aaa");
             return custCollection.findOne({ email: requestBody.email }).then((customers) => {
                 if (customers) throw "Email already exists.";
                 else {
-                    return custCollection.insertOne(newCustomers)
-                    .then(() => {
-                        return this.getUserById(id);
-                    });
+                    return custCollection.insertOne(newCustomers);
                 }
             });
         }).catch((err) => {
+            console.log(err);
             return Promise.reject(err);
         });
     },
 
 
-    addPurchaseRecordToUser(userId, proId) {
+    addOrderToUser(user, order) {
         return customers().then((custCollection) => {
             custCollection.updateOne(
-            {_id: userId},
+            {_id: user.id},
             {
                 $addToSet: {
-                    purchaseRecord: {
-                        _id: proId
+                    order: {
+                        order
                     }
                 }
             })
             }).then(() => {
-                    return this.getUserById(userId);
+                    return this.getUserById(user.id);
             }).catch((err) => {
             return Promise.reject(err);
         });
+    },
+
+    findOrder(user){
+            return customers.find({ user: user });
     },
     
     addCartToUser(userId, proId) {
@@ -138,7 +127,7 @@ let exportMethods = {
                 zipCode: requestBody.zipCode,
                 security: requestBody.security,
                 answer: requestBody.answer,
-                purchaseRecord: [],
+                order: [],
                 cart: []
             }
             let update = {
@@ -154,8 +143,8 @@ let exportMethods = {
     getUserByEmailPassport(email, cb) {
         return customers().then((custCollection) => {
             return custCollection.findOne({ email: email }).then((customers) => {
-                if (!customers) return cb(null, null);;
-                return cb(null, customers);;
+                if (!customers) return cb(null, null);
+                return cb(null, customers);
             });
         });
     },

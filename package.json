@@ -1,14 +1,14 @@
 {
-  "name": "lab9",
+  "name": "final",
   "version": "1.0.0",
-  "description": "lab9",
+  "description": "fina project",
   "main": "index.js",
   "scripts": {
     "start": "node app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Xiaotong Chen",
-  "license": "ISC",
+  "author": "BGM",
+  "license": "MIT",
   "dependencies": {
     "bcrypt": "^1.0.2",
     "bcrypt-nodejs": "0.0.3",
@@ -21,11 +21,9 @@
     "express-session": "^1.15.2",
     "express-validator": "^3.2.0",
     "mongodb": "^2.2.26",
-    "mongoose": "^4.9.5",
     "node-uuid": "^1.4.8",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "stripe": "^4.18.0",
     "uuid": "^3.0.1"
   }
 }

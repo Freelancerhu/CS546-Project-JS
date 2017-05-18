@@ -1,7 +1,6 @@
 const data = require("../data");
 const mongoCollections = require("../config/mongoCollections");
 const products = mongoCollections.products;
-// const sellerData = data.sellers;
 const uuid = require('node-uuid');
 
 
@@ -92,10 +91,6 @@ let exportedMethods = {
                     quantity: requestBody.quantity,
                     tag: requestBody.tag,
                     productImage: requestBody.URL,
-                    // creator: {
-                    //     _id: requestBody.SellerId,
-                    //     name: sellerData.getSellerById(requestBody.SellerId).name,
-                    // },
                     comments:[],
                 };
         return productsCollection.insertOne(newProduct).then((newProductInformation) => {

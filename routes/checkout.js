@@ -1,55 +1,27 @@
 var express = require('express');
 var router = express.Router();
 var Cart = require("../data/cart");
+const data = require("../data");
+const customerData = data.customers;
 
 router.get('/checkout', isLoggedIn, function(req, res, next){
-  console.log("aaa");
   if(!req.session.cart){
     return res.redirect('/shopping-cart');
   }
   var cart =new Cart(req.session.cart);
   var errMsg = req.flash('error')[0];
-  res.render('shop/checkout', {total: cart.totalPrice, errMsg: errMsg, noError: !errMsg})
+  res.render('shop/checkout', {total: cart.totalPrice, errMsg: errMsg, noError: !errMsg});
+//  req.session.cart = null;
 });
 
 router.post('/checkout', isLoggedIn, function(req, res, next){
-    console.log("a");
     if(!req.session.cart){
       return res.redirect('/shopping-cart');
     }
     var cart =new Cart(req.session.cart);
+    req.flash('success_msg', 'Successfully bought product!');
     req.session.cart = null;
-    res.redirect('/')
-    // var stripe = require("stripe")(
-    //   "sk_test_OK8iUCjvbtOYItHGJTMPZjWv"
-    // );
-    
-    // stripe.charges.create({
-    //   amount: cart.totalPrice * 100,
-    //   currency: "usd",
-    //   source: req.body.stripeToken,
-    //   description: "Test Charge"
-    // }, function(err, charge) {
-    //     if(err) {
-    //       req.flash('error', err.message);
-    //       return res.redirect('/checkout');
-    //     }
-    //     var order = new Order({
-    //       user: req.user,
-    //       cart: cart,
-    //       address: req.body.address,
-    //       name: req.body.name,
-    //       paymentId: charge.id,
-    //     });
-    //     order.save(function(err, result) {
-    //       req.flash('success', 'Successfully bought product!');
-    //       req.session.cart = null;
-    //       res.redirect('/')
-    //     });
-        
-    // });
-
-    
+    res.redirect('/');
 });
 
 function isLoggedIn(req, res, next){
@@ -57,14 +29,8 @@ function isLoggedIn(req, res, next){
     return next();
   }
   req.session.oldUrl = req.url;
-  res.redirect('/user/signin');
+  res.redirect('/customers/login');
 }
 
-function notLoggedIn(req, res, next){
-  if(!req.isAuthenticated()){
-    return next();
-  }
-  res.redirect('/');
-}
 
 module.exports = router;

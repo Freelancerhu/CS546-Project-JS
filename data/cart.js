@@ -10,12 +10,7 @@ module.exports=function Cart(oldCart){
         }
         
         var storedItem=this.items[tempId];
-        console.log("storedItem");
-        // if(storedItem) {
-        //     console.log(this.items[id].item._id);
-        // }
-        console.log("~storedItem");
-
+        
         if(!storedItem){
             storedItem=this.items[tempId]={item: item, qty:0, price:0}
         }
@@ -58,6 +53,5 @@ module.exports=function Cart(oldCart){
         this.totalPrice -= this.items[tempId].price;
         delete this.items[tempId];
     };
-
-    
+  
 };

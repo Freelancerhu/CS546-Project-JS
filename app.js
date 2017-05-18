@@ -10,15 +10,6 @@ var flash = require('connect-flash');
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var mongo = require('mongodb');
-var mongoose = require('mongoose');
-// mongoose.connect('mongodb://localhost/loginapp');
-// var db = mongoose.connection;
-
-
-// var routes = require('./routes/index');
-// var customers = require('./routes/customers');
-// var products = require('./routes/products');
-
 
 var app = express();
 
@@ -68,9 +59,6 @@ app.use((req, res, next) => {
     next();
 });
 
-// app.use('/', routes);
-// app.use('/customers', customers);
-// app.use('/products', products);
 configRoutes(app);
 
 app.listen(3000, () => {
